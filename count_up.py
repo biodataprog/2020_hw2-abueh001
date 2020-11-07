@@ -6,7 +6,7 @@
 gff="Escherichia_coli_str_k_12_substr_mg1655.ASM584v2.37.gff3.gz"
 fasta="Escherichia_coli_str_k_12_substr_mg1655.ASM584v2.dna.chromosome.Chromosome.fa.gz"
 
-import os,gzip,itertools,csv,re
+import os,gzip,itertools,csv,re,sys
 
 # this is code which will parse FASTA files
 # define what a header looks like in FASTA format
@@ -35,7 +35,34 @@ if not os.path.exists(fasta):
 with gzip.open(gff,"rt") as fh:
     # now add code to process this
     gff = csv.reader(fh,delimiter="\t")
+    numbergenes = 0
+    totgenelength = 0
+    genelength = 0
     for row in gff:
         if row[0].startswith("#"):
             continue
-        print(row[3],row[6])
+            
+        if "gene" == row[2]:
+            numbergenes += 1
+            genelength = int(row[4])-int(row[3])
+            totgenelength += genelength
+   
+        
+        
+    print("The number of genes is:",numbergenes)
+    print("The total gene length is:",totgenelength,"bp")
+      
+with gzip.open(fasta,"rt") as fh: 
+    pairs = aspairs(fh)
+    seqs = dict(pairs)
+    for a,b in seqs.items():
+        seq_id = a
+        seq = b
+        bp = 0
+        
+    for line in seq:
+        bp +=len(line)
+        
+print("The sequence length is:",bp,"bp")
+print("The coding percentage of the genome is:","{0:.2%}".format(totgenelength/bp))
+        
