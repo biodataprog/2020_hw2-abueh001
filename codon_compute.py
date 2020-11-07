@@ -31,8 +31,29 @@ if not os.path.exists(file2):
 
 with gzip.open(file1,"rt") as fh:
     seqs = aspairs(fh)
+    sequence_count=0
+    i = 0
+    for seqname in seqs:
+        if i == 0:
+            i += 1
+        sequence_count += 1
+        seqcount1 = sequence_count
+    print("The number of genes in the salmonella file is:",seqcount1)
 
-    for seq in seqs:
-        seqname  = seq[0]
-        seqstring= seq[1]
-        print(seqname, " first 10 bases are ", seqstring[0:10])
+    #for seq in seqs:
+        #seqname  = seq[0]
+        #seqstring= seq[1]
+        #print(seqname, " first 10 bases are ", seqstring[0:10])
+
+            
+with gzip.open(file2,"rt") as fh:
+    seqs = aspairs(fh)
+    sequence_count=0
+    i = 0
+    for seqname in seqs:
+        if i == 0:
+            i += 1
+        sequence_count += 1
+        seqcount2 = sequence_count
+        
+    print("The number of genes in the tuberculosis file is:",seqcount2)
